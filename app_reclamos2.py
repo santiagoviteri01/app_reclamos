@@ -44,7 +44,7 @@ if uploaded_file_reclamos and uploaded_file_asegurados:
         # Procesamiento de datos de asegurados
         asegurados['FECHA'] = pd.to_datetime(asegurados['FECHA'])
         asegurados['MES'] = asegurados['FECHA'].dt.month
-        asegurados['MES_NOMBRE'] = asegurados['FECHA'].dt.month_name(locale='es_ES.UTF-8')
+        asegurados['MES_NOMBRE'] = asegurados['FECHA'].dt.month_name()
         asegurados['AÑO'] = asegurados['FECHA'].dt.year
         
         # Orden de meses y configuración temporal
