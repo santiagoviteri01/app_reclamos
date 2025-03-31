@@ -490,17 +490,33 @@ if uploaded_file_reclamos and uploaded_file_asegurados:
             
             # Convertir y ordenar meses
             pagos_aseguradora_data['FECHA SINIESTRO'] = pd.to_datetime(pagos_aseguradora_data['FECHA SINIESTRO'])
-            pagos_aseguradora_data['MES'] = pagos_aseguradora_data['FECHA SINIESTRO'].dt.month_name(locale='es_ES.UTF-8')
+            pagos_aseguradora_data['MES'] = pagos_aseguradora_data['FECHA SINIESTRO'].dt.month_name()
             pagos_aseguradora_data['MES'] = pd.Categorical(pagos_aseguradora_data['MES'], categories=orden_meses, ordered=True)
             
-            # Gráfico de barras ordenado
-            fig, ax = plt.subplots(figsize=(10, 5))
-            pagos_aseguradora_data['MES'].value_counts().sort_index().plot(kind='bar', color='skyblue', ax=ax)
-            plt.title('Reclamos por Mes (Orden Cronológico)')
-            plt.xlabel('Mes')
-            plt.ylabel('Cantidad')
-            plt.xticks(rotation=45)
-            st.pyplot(fig)
+            # Crear el gráfico con Seaborn (más control)
+            plt.figure(figsize=(12, 6))
+            ax = sns.countplot(
+                data=pagos_aseguradora_data,
+                x='MES',
+                order=orden_meses,
+                palette='viridis'
+            )
+            
+            # Personalización
+            plt.title('Reclamos por Mes (Orden Cronológico) 🗓️', fontsize=14, fontweight='bold')
+            plt.xlabel('Mes', fontsize=12)
+            plt.ylabel('Cantidad de Reclamos', fontsize=12)
+            plt.xticks(rotation=45, ha='right')
+            
+            # Añadir etiquetas de valores
+            for p in ax.patches:
+                ax.annotate(
+                    f'{int(p.get_height())}', 
+                    (p.get_x() + p.get_width() / 2., p.get_height()),
+                    ha='center', va='center', xytext=(0, 5), textcoords='offset points'
+                )
+            
+            st.pyplot(plt.gcf())
 
             # Sección 3: Análisis de valores
             st.header("💰 Análisis de Valores")
