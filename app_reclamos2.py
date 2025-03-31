@@ -6,10 +6,8 @@ import seaborn as sns
 from datetime import datetime
 import locale
 
-try:
-    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
-except locale.Error:
-    print("No se pudo establecer el locale en español. Usando inglés por defecto.")
+locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')  # Ajusta según lo disponible en tu sistema
+
     
 # Configuración inicial
 st.set_page_config(page_title="Dashboard de Seguros", layout="wide")
