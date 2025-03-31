@@ -490,7 +490,7 @@ if uploaded_file_reclamos and uploaded_file_asegurados:
             
             # Convertir y ordenar meses
             pagos_aseguradora_data['FECHA SINIESTRO'] = pd.to_datetime(pagos_aseguradora_data['FECHA SINIESTRO'])
-            pagos_aseguradora_data['MES'] = pagos_aseguradora_data['FECHA SINIESTRO'].dt.month_name(locale='Spanish')
+            pagos_aseguradora_data['MES'] = pagos_aseguradora_data['FECHA SINIESTRO'].dt.month_name()
             pagos_aseguradora_data['MES'] = pd.Categorical(pagos_aseguradora_data['MES'], categories=orden_meses, ordered=True)
             
             # Gráfico de barras ordenado
