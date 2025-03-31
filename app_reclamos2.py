@@ -6,7 +6,10 @@ import seaborn as sns
 from datetime import datetime
 import locale
 
-locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')  # Ajusta según lo disponible en tu sistema
+try:
+    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+except locale.Error:
+    locale.setlocale(locale.LC_TIME, 'C')  # O usa otro locale disponible
 
     
 # Configuración inicial
