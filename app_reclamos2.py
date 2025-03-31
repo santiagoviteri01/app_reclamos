@@ -491,14 +491,13 @@ if uploaded_file_reclamos and uploaded_file_asegurados:
             # Convertir y ordenar meses
             pagos_aseguradora_data['FECHA SINIESTRO'] = pd.to_datetime(pagos_aseguradora_data['FECHA SINIESTRO'])
             pagos_aseguradora_data['MES'] = pagos_aseguradora_data['FECHA SINIESTRO'].dt.month_name()
-            pagos_aseguradora_data['MES'] = pd.Categorical(pagos_aseguradora_data['MES'], categories=orden_meses, ordered=True)
+            #pagos_aseguradora_data['MES'] = pd.Categorical(pagos_aseguradora_data['MES'], categories=orden_meses, ordered=True)
             
             # Crear el gráfico con Seaborn (más control)
             plt.figure(figsize=(12, 6))
             ax = sns.countplot(
                 data=pagos_aseguradora_data,
                 x='MES',
-                order=orden_meses,
                 palette='viridis'
             )
             
