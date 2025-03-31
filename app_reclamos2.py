@@ -1,3 +1,11 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from datetime import datetime
+
+
 # Configuración inicial
 st.set_page_config(page_title="Dashboard de Seguros", layout="wide")
 
