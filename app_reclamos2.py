@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from datetime import datetime
 import locale
+import io
 
 try:
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
@@ -759,13 +760,24 @@ if uploaded_file_reclamos and uploaded_file_asegurados:
                 st.write(pendientes_estado)
 
                 nombre_archivo = f"Reporte_Retorno_{año_analisis}.xlsx"
-                with pd.ExcelWriter(nombre_archivo) as writer:
+                output = io.BytesIO()
+                with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
                     resumen_mes.to_excel(writer, sheet_name='Resumen Mes')
                     talleres.to_excel(writer, sheet_name='Talleres')
                     causas.to_excel(writer, sheet_name='Causas')
                     pendientes_estado.to_excel(writer, sheet_name='Pendientes')
-        
-                st.success(f"Reporte {año_analisis} generado: {nombre_archivo}")
+            
+                output.seek(0)  # Muy importante: volver al inicio del archivo para descargarlo
+            
+                st.success(f"Reporte {año_analisis} generado.")
+            
+                # Ahora sí: ofrecer el botón de descarga
+                st.download_button(
+                    label="Descargar Reporte",
+                    data=output,
+                    file_name=f"Reporte_Retorno_{año_analisis}.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
         with tab3:
             # --- ANÁLISIS DE SINIESTRALIDAD ---
             st.header("📉 Siniestralidad Mensual por Aseguradora")
